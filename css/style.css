@@ -1,0 +1,41 @@
+
+body {
+    font-family: 'Goldman';
+    background-color: rgb(34, 72, 134);
+    background-image: url("../img/background.jpg");
+    font-size: 1em;
+}
+
+a {
+    color: rgb(173, 236, 255);
+}
+
+a:hover {
+    color: rgb(255, 208, 0); 
+    text-decoration: none;
+}
+
+h1{
+    color: rgb(173, 236, 255);
+}
+
+footer {
+    color: rgb(255, 255, 255);
+    font-size: 0.8em;
+}
+
+.game-canvas{
+    background-color: rgb(40, 60, 119);    
+}
+
+.game-canvas{
+    border: 1px solid rgb(173, 236, 255);
+}
+
+.fortyfour { 
+    
+    font-style: italic;
+    border-radius: 10px;
+    color: rgb(230, 189, 7);
+    background: rgb(31, 85, 165);
+}
