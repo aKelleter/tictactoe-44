@@ -5,12 +5,18 @@ class ScenePlay {
         this.gameover = false;
         this.winner = 0;
         this.fontSizeGameOver = 1000;
+        this.scoreP1 = 0;
+        this.scoreP2 = 0;
+        this.scoreP1open = true;
+        this.scoreP2open = true;
     }
 
     init()
     {
         this.gameover = false;   
-        this.fontSizeGameOver = 1000;      
+        this.fontSizeGameOver = 1000;    
+        this.scoreP1open = true;
+        this.scoreP2open = true;  
     }
 
     update()
@@ -19,15 +25,29 @@ class ScenePlay {
         {
             this.winner = GticTacToe.boardGetWinner();
             this.gameover = true;           
+            GticTacToe.boardReset();       
+
+        }else if(this.gameover == true){   
+
             GticTacToe.boardReset();
-        }else if(this.gameover == true){                               
-            GticTacToe.boardReset();
+            if(this.winner == 1 && this.scoreP1open){
+                this.scoreP1++;
+                this.scoreP1open = false;
+            }else if(this.winner == 2 && this.scoreP2open){
+                this.scoreP2++;
+                this.scoreP2open = false;
+            }
         }
+    
     }
 
     draw()
     {
+        // La grille de jeu
         GticTacToe.boardDraw();  
+
+        this.drawScore();
+
         if(this.gameover)
         { 
             for(let x = 100 ; x > 30 ; x--)
@@ -36,12 +56,13 @@ class ScenePlay {
                 if(this.fontSizeGameOver > 40)
                     this.fontSizeGameOver--;               
             }
-            if(this.winner != 0)
-            {
-                this.drawWinner();                  
-                //GticTacToe.playSoundWinner().soundPlay();                
-            }
-            this.drawGameOver(this.fontSizeGameOver);             
+            
+            this.drawWinner();    
+            //GticTacToe.playSoundWinner().soundPlay();                
+
+            if(this.winner == 0)
+                this.drawGameOver(this.fontSizeGameOver);             
+
             this.drawContinue();             
             
         }
@@ -66,6 +87,7 @@ class ScenePlay {
         let antihoraire = false;
         
         Gctx.beginPath();
+        Gctx.fillStyle = "#dfaa1a"; 
         Gctx.arc(x, y, rayon, angleInitial, angleFinal, antihoraire);
         Gctx.fill();
 
@@ -85,9 +107,32 @@ class ScenePlay {
         Gctx.fillText(" - C L I C K   T O   R E P L A Y -", (Gcanvas.width - GticTacToe.getposX() - 120) /2, 580);
      }
 
+     drawScore()
+     {
+        Gctx.font = "14px sans-serif";
+        Gctx.fillStyle = "#dfaa1a";  
+        Gctx.fillText("SCORE", (35), 130);
+        Gctx.fillStyle = "#ffffff"; 
+        Gctx.fillText("PLAYER 1", (28), 150);
+
+        Gctx.fillStyle = "#3a8dc3"; 
+        Gctx.font = "20px sans-serif";
+        Gctx.fillText(this.scoreP1, (53), 180);
+
+        Gctx.font = "14px sans-serif";
+        Gctx.fillStyle = "#dfaa1a";  
+        Gctx.fillText("SCORE", (555), 130);
+        Gctx.fillStyle = "#ffffff"; 
+        Gctx.fillText("PLAYER 2", (548), 150);
+
+        Gctx.fillStyle = "#3a8dc3"; 
+        Gctx.font = "20px sans-serif";
+        Gctx.fillText(this.scoreP2, (573), 180);
+        
+     }
+
     clic(pX, pY)
     {
-        
         GsceneManager.goToScene("play");
         if(this.gameover) {
             GsceneManager.goToScene("menu");         
